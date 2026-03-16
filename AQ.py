@@ -1,13 +1,20 @@
-n = int(input())
-mas = sorted(map(int, input().split()))
+import sys
 
-if mas[0] != 1:
-    print(1)
-else:
-    max_val = 1
-    for i in range(1, n):
-        if mas[i] <= max_val + 1:
-            max_val += mas[i]
-        else:
+vvod = sys.stdin.readline
+
+def solve():
+    n = int(input())
+    nums = [int(input()) for _ in range(n)]
+    nums.sort()
+
+    reach = 0
+
+    for x in nums:
+        if x > reach + 1:
             break
-    print(max_val + 1)
+        reach += x
+
+    print(reach + 1)
+
+
+solve()
