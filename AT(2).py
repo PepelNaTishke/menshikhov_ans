@@ -7,8 +7,9 @@ def make_point(R, lat, lon):
         R * math.sin(math.radians(lat))
     )
 
-R, lat1, lon1, lat2, lon2 = map(float, input().split())
-
+R = float(input())
+lat1, lon1 = map(float, input().split())
+lat2, lon2 = map(float, input().split())
 A = make_point(R, lat1, lon1)
 B = make_point(R, lat2, lon2)
 
