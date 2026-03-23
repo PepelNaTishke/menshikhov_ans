@@ -24,8 +24,9 @@ def ok(x, y):
 
 def solve():
     global queue
-    nxt  = []
-    wave = 1
+    nxt     = []
+    nxt_map = {}   # (x, y) -> index in nxt
+    wave    = 1
 
     while queue:
         while queue:
@@ -40,17 +41,19 @@ def solve():
 
                 if grid[x][y] == 0:
                     grid[x][y] = MARKED if cnum == -1 else -cnum
+                    idx = len(nxt)
                     nxt.append([x, y, cnum])
+                    nxt_map[(x, y)] = idx
                     waves[x][y] = wave
 
                 elif waves[x][y] == wave and grid[x][y] != -cnum and grid[x][y] != MARKED:
                     grid[x][y] = MARKED
-                    for item in nxt:
-                        if item[0] == x and item[1] == y:
-                            item[2] = -1
-                            break
+                    idx = nxt_map.get((x, y))
+                    if idx is not None:
+                        nxt[idx][2] = -1
 
         queue, nxt = nxt, []
+        nxt_map = {}
         wave += 1
 
 def output():
