@@ -1,28 +1,21 @@
-MAX_VALUE = 1 << 30
-
 f, s, n = map(int, input().split())
-
 if f > s:
     f, s = s, f
 
-amounts = [0] * (n + 1)
-rest    = [MAX_VALUE] * (n + 1)
+bc = 0
+br = n
+max_s = n // s
 
-for i in range(f):
-    amounts[i] = 0
-    rest[i]    = i
+for b in range(max_s + 1):
+    rem = n - b * s
+    a = rem // f
+    rest = rem - a * f
+    total = a + b
+    if rest < br or (rest == br and total > bc):
+        bc = total
+        br = rest
 
-def go(step):
-    for i in range(step, n + 1):
-        if rest[i - step] < rest[i]:
-            rest[i]    = rest[i - step]
-            amounts[i] = amounts[i - step] + 1
-
-go(f)
-if f != s:
-    go(s)
-
-if rest[n] != 0:
-    print(amounts[n], rest[n])
+if br != 0:
+    print(bc, br)
 else:
-    print(amounts[n])
+    print(bc)
